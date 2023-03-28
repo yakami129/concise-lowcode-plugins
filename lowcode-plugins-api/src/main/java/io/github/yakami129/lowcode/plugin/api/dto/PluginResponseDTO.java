@@ -12,9 +12,9 @@ public class PluginResponseDTO {
 
     private Integer code;
     private String message;
-    private Map<String, Object> data;
+    private Map<String, String> data;
 
-    public PluginResponseDTO(Integer code, String message, Map<String, Object> data) {
+    public PluginResponseDTO(Integer code, String message, Map<String, String> data) {
         this.code = code;
         this.message = message;
         this.data = data;
@@ -25,7 +25,7 @@ public class PluginResponseDTO {
                 PluginResponseCodeEnum.success.name(), null);
     }
 
-    public static PluginResponseDTO success(Map<String, Object> data) {
+    public static PluginResponseDTO success(Map<String, String> data) {
         return new PluginResponseDTO(PluginResponseCodeEnum.success.getCode(),
                 PluginResponseCodeEnum.success.name(), data);
     }
@@ -47,11 +47,11 @@ public class PluginResponseDTO {
         this.code = code;
     }
 
-    public Map<String, Object> getData() {
+    public Map<String, String> getData() {
         return data;
     }
 
-    public void setData(Map<String, Object> data) {
+    public void setData(Map<String, String> data) {
         this.data = data;
     }
 

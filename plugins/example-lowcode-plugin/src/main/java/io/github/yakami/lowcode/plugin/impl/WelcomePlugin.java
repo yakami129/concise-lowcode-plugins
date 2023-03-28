@@ -9,6 +9,9 @@ import org.pf4j.PluginWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Created by alan on 2023/3/28.
  */
@@ -35,7 +38,9 @@ public class WelcomePlugin extends Plugin {
         @Override
         public PluginResponseDTO invoke(PluginRequestDTO pluginRequestDTO) {
             logger.info("[PLUGIN] run WelcomePluginImpl");
-            return PluginResponseDTO.success();
+            Map<String, String> outPut = new LinkedHashMap<>();
+            outPut.put("ip", "192.168.333");
+            return PluginResponseDTO.success(outPut);
         }
     }
 }
