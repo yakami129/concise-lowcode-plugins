@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+description = "示例插件实现"
+group = 'io.github.yakami129'
+version = '1.0.0'
+sourceCompatibility = '11'
+
+
+dependencies {
+    compileOnly project(":lowcode-plugins-api")
+    compileOnly "org.pf4j:pf4j:${pf4jVersion}"
+    compileOnly "org.slf4j:slf4j-api:${slf4jVersion}"
+    compile "cn.hutool:hutool-all:${hutoolVersion}"
+    compile "org.apache.commons:commons-lang3:${commonsLang3Version}"
+    compile "org.apache.commons:commons-collections4:${commonsCollections4Version}"
+    annotationProcessor "org.pf4j:pf4j:${pf4jVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}

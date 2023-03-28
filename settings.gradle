@@ -1,0 +1,5 @@
+rootProject.name = 'concise-lowcode-plugins'
+include 'lowcode-plugins-api'
+include 'plugins'
+include 'plugins:example-lowcode-plugin'
+

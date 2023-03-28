@@ -1,0 +1,13 @@
+plugins {
+    id 'java'
+}
+
+description = "lowcode-boot的插件接口"
+group = 'io.github.yakami129'
+version = '1.0.2-SNAPSHOT'
+sourceCompatibility = '11'
+
+dependencies {
+    compileOnly "org.pf4j:pf4j:${pf4jVersion}"
+}
+

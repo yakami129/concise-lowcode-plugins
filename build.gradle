@@ -1,0 +1,106 @@
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    group = 'io.github.yakami129'
+    version = '1.0.0'
+}
+
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'signing'
+
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/spring' }
+        maven { url 'https://maven.aliyun.com/repository/spring-plugin' }
+        mavenLocal()
+        mavenCentral()
+    }
+
+    ext {
+        slf4jVersion = '1.7.36'
+        pf4jVersion = '3.9.0'
+        hutoolVersion = '5.8.5'
+        commonsFileuploadVersion = '1.4'
+        commonscodecVersion = '1.5'
+        commonsLang3Version = '3.12.0'
+        commonsCollections4Version = '4.4'
+    }
+
+    /**
+     * clean 命令时删除 out 目录
+     */
+    task cleanOutDir(type: Delete) {
+        delete rootProject.buildDir.path + '/plugins'
+    }
+    tasks.clean.dependsOn(cleanOutDir)
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives sourcesJar
+    }
+
+    signing {
+        sign configurations.archives
+    }
+
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: "https://s01.oss.sonatype.org/content/repositories/releases/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+                snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                pom.project {
+                    name 'concise-infrastructure-starter'
+                    packaging 'jar'
+                    // optionally artifactId can be defined here
+                    description 'This is a Java infrastructure component library to help users quickly build frameworks'
+                    url 'https://github.com/yakami129/concise-infrastructure-starter'
+
+                    scm {
+                        connection 'https://github.com/yakami129/concise-infrastructure-starter.git'
+                        url 'https://github.com/yakami129/concise-infrastructure-starter.git'
+                    }
+
+                    licenses {
+                        license {
+                            name 'The Apache License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'okapi0129'
+                            name 'okapi0129'
+                            email 'okapi0129@outlook.com'
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+// plugin location
+ext.pluginsDir = rootProject.buildDir.path + '/plugins'
